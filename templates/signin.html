@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+    <div class="page_header">
+        <p>Sign In</p>
+    </div>
+    <div class="signup-buttons">
+        <a href="{% url 'customer_signup' %}" class="btn btn-primary mr-2">Customer Sign Up</a>
+        <a href="{% url 'shop_signup' %}" class="btn btn-success">Shop Sign Up</a>
+    </div>
+<br />
+{% endblock %}
