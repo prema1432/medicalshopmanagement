@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
 
 {% block title %}About Us{% endblock %}
 
@@ -10,5 +12,21 @@
         <a href="{% url 'customer_signup' %}" class="btn btn-primary mr-2">Customer Sign Up</a>
         <a href="{% url 'shop_signup' %}" class="btn btn-success">Shop Sign Up</a>
     </div>
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">{{ form.username.label }}</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <br />
 {% endblock %}
