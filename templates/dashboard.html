@@ -3,7 +3,10 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <div class="page_header">
-        <p>Dashboard</p>
+
+    {% include 'sidebar.html' %}
+    <div class="content">
+        <h2>Admin Dashboard</h2>
+        <p>This is the main content area.</p>
     </div>
 {% endblock %}
