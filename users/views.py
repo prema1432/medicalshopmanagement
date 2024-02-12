@@ -71,3 +71,8 @@ def customers_list(request):
     context = {}
     context['customers'] = CustomUser.objects.all()
     return render(request, 'customers.html', context)
+
+def admin_users_list(request):
+    context = {}
+    context['customers'] = CustomUser.objects.all()
+    return render(request, 'admin_users_list.html', context)
