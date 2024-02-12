@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from users.forms import SignInForm
+from users.models import CustomUser
 
 
 def index(request):
@@ -29,11 +30,6 @@ def signin(request):
         password = form.cleaned_data['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            print("--------------------------------")
-            print("User Loggined Success")
-            print("jkbhkj", user.username)
-            print("jkbhkj", user.role)
-            print("--------------------------------")
             login(request, user)
             if user.role in ["admin"]:
                 return redirect('dashboard')
@@ -69,3 +65,9 @@ def dashboard(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+
+def customers_list(request):
+    context = {}
+    context['customers'] = CustomUser.objects.all()
+    return render(request, 'customers.html', context)

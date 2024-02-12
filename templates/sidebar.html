@@ -1,8 +1,10 @@
 <div class="sidebar">
-    <a href="#">Dashboard</a>
-    <a href="#">Orders</a>
-    <a href="#">Customers</a>
+    <a href="{% url 'index' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a>
+    <a href="{% url 'dashboard' %}" {% if request.path == '/dashboard/' %}class="active"{% endif %}>Dashboard</a>
     <a href="#">Shops</a>
+    <a href="{% url 'customers' %}" {% if request.path == '/customers/' %}class="active"{% endif %}>Customers</a>
+    <a href="#">Admin Users</a>
+    <a href="#">Orders</a>
     <a href="#">Items</a>
     <a href="#">Help</a>
 </div>

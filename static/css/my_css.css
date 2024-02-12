@@ -81,10 +81,11 @@ body {
     height: 100%;
     width: 200px;
     position: fixed;
-    top: 0;
+    /*top: 0;*/
     left: 0;
     background-color: #333;
-    padding-top: 20px;
+    padding-top: 5% !important;
+    padding-left: 2% !important;
 }
 
 .sidebar a {
@@ -101,4 +102,9 @@ body {
 .content {
     /*margin-left: 200px;*/
     padding: 20px;
+}
+
+.sidebar a.active {
+    background-color: #007bff;
+    color: #fff;
 }
