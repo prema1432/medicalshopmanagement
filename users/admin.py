@@ -1,20 +1,26 @@
-from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from users.models import CustomUser
 
+from django.contrib import admin
+
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ['username', 'email', 'first_name', 'last_name', 'is_staff', 'role']
-    search_fields = ['username', 'email']
+    list_display = ('username', 'email', 'role')
+    list_filter = ('role', 'created_at')
+    date_hierarchy = 'created_at'
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name', 'email', 'role')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
-    )
-    list_filter = ['role']
-    date_hierarchy = 'date_joined'
+        (None, {'fields': (
+            'username', 'first_name', 'last_name', 'email', 'password', 'is_superuser', 'is_staff', 'is_active',
+            'role',)}),)
+    add_fieldsets = (
+        (None, {
+            'fields': (
+                'username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'is_staff', 'is_active',
+                'is_superuser', 'role',), }),)
+    search_fields = ('username', 'email')
+    ordering = ('-id', 'username')
+    filter_horizontal = ()
 
 
 admin.site.register(CustomUser, UserAdmin)

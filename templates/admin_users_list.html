@@ -22,17 +22,17 @@
         <tbody>
         {% for customer in customers %}
             <tr>
-            <tr>
                 <td>{{ customer.username }}</td>
                 <td>{{ customer.first_name }} {{ customer.last_name }}</td>
                 <td>{{ customer.email }}</td>
                 <td>{{ customer.phone_number }}</td>
                 <td>{{ customer.created_at }}</td>
             </tr>
-            </tr>
         {% endfor %}
         </tbody>
     </table>
 
-
+<br>
+<br>
+<br>
 {% endblock %}

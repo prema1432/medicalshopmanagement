@@ -69,10 +69,11 @@ def logout_view(request):
 
 def customers_list(request):
     context = {}
-    context['customers'] = CustomUser.objects.all()
+    context['customers'] = CustomUser.objects.filter(role="customer").order_by('-created_at')
     return render(request, 'customers.html', context)
+
 
 def admin_users_list(request):
     context = {}
-    context['customers'] = CustomUser.objects.all()
+    context['customers'] = CustomUser.objects.filter(role="admin").order_by('-created_at')
     return render(request, 'admin_users_list.html', context)
