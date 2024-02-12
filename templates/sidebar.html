@@ -1,7 +1,7 @@
 <div class="sidebar">
     <a href="{% url 'index' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a>
     <a href="{% url 'dashboard' %}" {% if request.path == '/dashboard/' %}class="active"{% endif %}>Dashboard</a>
-    <a href="#">Shops</a>
+    <a href="{% url 'shops_list' %}" {% if request.path == '/shops_list/' %}class="active"{% endif %}>Shops</a>
     <a href="{% url 'customers' %}" {% if request.path == '/customers/' %}class="active"{% endif %}>Customers</a>
     <a href="{% url 'admin_users' %}" {% if request.path == '/admin_users/' %}class="active"{% endif %}>Admin Users</a>
     <a href="#">Orders</a>

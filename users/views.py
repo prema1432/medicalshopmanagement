@@ -77,3 +77,9 @@ def admin_users_list(request):
     context = {}
     context['customers'] = CustomUser.objects.filter(role="admin").order_by('-created_at')
     return render(request, 'admin_users_list.html', context)
+
+
+def shops_list(request):
+    context = {}
+    context['shops'] = CustomUser.objects.filter(role="shop").order_by('-created_at')
+    return render(request, 'shops_list.html', context)

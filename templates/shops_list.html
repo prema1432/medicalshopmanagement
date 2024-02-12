@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+    <div class="content">
+        <h2>Shops</h2>
+    </div>
+
+    <table class="customersTable table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Shop ID</th>
+            <th>Shop Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Created</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for shop in shops %}
+            <tr>
+                <td>{{ shop.username }}</td>
+                <td>{{ shop.first_name }} {{ shop.last_name }}
+                    <br>
+                    {% if shop.image_path %}
+                        <img src="{{ shop.image_path }}" alt="" height="100px" width="100px" loading="lazy">
+                    {% endif %}
+                </td>
+                <td>{{ shop.email }}</td>
+                <td>{{ shop.phone_number }}</td>
+                <td>{{ shop.created_at }}</td>
+                <td>
+                    <a href="" class="btn bg-primary">Edit</a> &nbsp;
+                    <a href="" class="btn bg-danger">Delete</a>&nbsp;
+                    <a href="" class="btn bg-warning">View</a>&nbsp;
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+{% endblock %}

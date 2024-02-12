@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import index, about_us, cart, signin, products, customer_signup, shop_signup, shops, logout_view, \
-    dashboard, customers_list, admin_users_list
+    dashboard, customers_list, admin_users_list, shops_list
 
 urlpatterns = [
     path('', index, name='index'),
@@ -16,4 +16,5 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('customers/', customers_list, name='customers'),
     path('admin_users/', admin_users_list, name='admin_users'),
+    path('shops_list/', shops_list, name='shops_list'),
 ]

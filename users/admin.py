@@ -12,12 +12,12 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': (
             'username', 'first_name', 'last_name', 'email', 'password', 'is_superuser', 'is_staff', 'is_active',
-            'role',)}),)
+            'role', 'phone_number', 'address', 'city', 'state', 'country', 'image')}),)
     add_fieldsets = (
         (None, {
             'fields': (
                 'username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'is_staff', 'is_active',
-                'is_superuser', 'role',), }),)
+                'is_superuser', 'role', 'phone_number', 'address', 'city', 'state', 'country', 'image'), }),)
     search_fields = ('username', 'email')
     ordering = ('-id', 'username')
     filter_horizontal = ()
