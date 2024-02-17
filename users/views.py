@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render, redirect, get_object_or_404
 
-from users.forms import SignInForm
-from users.models import CustomUser
+from users.forms import SignInForm, ShopEditForm, CategoryForm
+from users.models import CustomUser, Category
 
 
 def index(request):
@@ -83,3 +85,91 @@ def shops_list(request):
     context = {}
     context['shops'] = CustomUser.objects.filter(role="shop").order_by('-created_at')
     return render(request, 'shops_list.html', context)
+
+
+def delete_shop(request, shop_id):
+    if request.method == 'POST':
+        shop = get_object_or_404(CustomUser, id=shop_id, role="shop")
+        shop.delete()
+        return redirect('shops_list')
+    else:
+        return HttpResponseBadRequest("Invalid request method")
+
+
+def delete_user(request, user_id):
+    try:
+        obj = CustomUser.objects.get(id=user_id)
+        role_based = obj.role
+        obj.delete()
+        messages.success(request, f'{role_based} deleted successfully.')
+    except CustomUser.DoesNotExist:
+        messages.error(request, f'Id does not exist.')
+    if role_based == 'admin':
+        return redirect('admin_users_list')
+    elif role_based == 'shop':
+        return redirect('shops_list')
+    elif role_based == 'customer':
+        return redirect('customers_list')
+    return redirect('your_redirect_url_name')
+
+
+def edit_shop_user(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)
+
+    if request.method == 'POST':
+        form = ShopEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User details updated successfully.')
+            role_based = user.role
+            if role_based == 'admin':
+                return redirect('admin_users_list')
+            elif role_based == 'shop':
+                return redirect('shops_list')
+            elif role_based == 'customer':
+                return redirect('customers_list')
+        else:
+            messages.error(request, 'Error updating shop details. Please check the form.')
+    else:
+        form = ShopEditForm(instance=user)
+
+    return render(request, 'edit_shop_user.html', {'form': form, 'user': user})
+
+
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'category_list.html', {'categories': categories})
+
+
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category created successfully.')
+            return redirect('category_list')
+    else:
+        form = CategoryForm()
+    return render(request, 'category_form.html', {'form': form})
+
+
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category updated successfully.')
+            return redirect('category_list')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'category_form.html', {'form': form})
+
+
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, 'Category deleted successfully.')
+        return redirect('category_list')
+    return render(request, 'category_confirm_delete.html', {'category': category})

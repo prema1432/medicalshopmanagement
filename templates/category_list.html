@@ -6,33 +6,28 @@
 
     {% include 'sidebar.html' %}
     <div class="content">
-        <h2>Shops</h2>
+        <h2>Categories</h2>
     </div>
     {% include 'alerts.html' %}
     <table class="customersTable table table-striped table-bordered">
         <thead>
         <tr>
-            <th>Shop ID</th>
-            <th>Shop Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
             <th>Created</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        {% for shop in shops %}
+        {% for category in categories %}
             <tr>
-                <td>{{ shop.username }}</td>
-                <td>{{ shop.first_name }} {{ shop.last_name }}
-                    <br>
-                    {% if shop.image_path %}
-                        <img src="{{ shop.image_path }}" alt="" height="100px" width="100px" loading="lazy">
-                    {% endif %}
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}
+
                 </td>
-                <td>{{ shop.email }}</td>
-                <td>{{ shop.phone_number }}</td>
-                <td>{{ shop.created_at }}</td>
+                <td>{{ category.description }}</td>
+                <td>{{ category.created_at }}</td>
                 <td>
                     <a href="" class="btn bg-warning" data-toggle="modal" data-target="#exampleModal{{ shop.id }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
@@ -41,36 +36,29 @@
                             <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
                         </svg>
                     </a>&nbsp;
-                    <div class="modal fade" id="exampleModal{{ shop.id }}" tabindex="-1"
+                    <div class="modal fade" id="exampleModal{{ category.id }}" tabindex="-1"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Shop
-                                        : {{ shop.first_name }} {{ shop.last_name }} - {{ shop.username }}</h5>
+                                        : {{ category.name }} </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="image-container">
-                                        <img src="{{ shop.image_path }}" alt="Shop Image">
-                                    </div>
-                                    <div class="text-container">
-                                        <h4>{{ shop.first_name }} {{ shop.last_name }}</h4>
-                                        <p>Email: {{ shop.email }}</p>
-                                        <p>Phone Number: {{ shop.phone_number }}</p>
-                                        <p>Address: {{ shop.address }}</p>
-                                        <p>City: {{ shop.city }}</p>
-                                        <p>State: {{ shop.state }}</p>
-                                        <p>Country: {{ shop.country }}</p>
+
+                                    <div class="text-containers">
+                                        <p>Name: {{ category.name }}</p>
+                                        <p>Description: {{ category.description }}</p>
                                         <p>Created At: {{ shop.created_at }}</p>
 
 
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="{% url 'delete_user' shop.id %}" class="btn bg-danger">
+                                    <a href="{% url 'delete_category' category.id %}" class="btn bg-danger">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
                                              class="bi bi-trash"
                                              viewBox="0 0 16 16">
@@ -79,7 +67,7 @@
                                         </svg>
                                     </a>&nbsp;
                                     <br>
-                                    <a href="{% url 'edit_shop_user' shop.id %}" class="btn bg-primary">
+                                    <a href="{% url 'edit_category' category.id %}" class="btn bg-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
                                              class="bi bi-pen" viewBox="0 0 16 16">
                                             <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>

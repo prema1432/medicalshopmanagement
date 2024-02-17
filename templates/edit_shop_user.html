@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+    <div class="content">
+        <h3>Edit Shop {{ user.username }}</h3>
+    </div>
+    <br>
+    {% include 'alerts.html' %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ form.username.label }}</div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">Update Shop</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+{% endblock %}

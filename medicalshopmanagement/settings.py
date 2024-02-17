@@ -133,4 +133,4 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-HOST = 'http://127.0.0.1:8011/'
+HOST = 'http://127.0.0.1:8002/'

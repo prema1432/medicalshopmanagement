@@ -22,7 +22,6 @@ class CustomUser(AbstractUser):
     def image_path(self):
         self_image = str(self.image)
         if self_image:
-            print('Image path 2022', self_image)
             if self_image.startswith('https://'):
                 endpoint = self.image
             else:
@@ -30,3 +29,11 @@ class CustomUser(AbstractUser):
             return endpoint
         else:
             return None
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
