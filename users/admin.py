@@ -1,6 +1,6 @@
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from users.models import CustomUser
+from users.models import CustomUser, MedicalProductCategory, MedicalProduct, Cart
 
 from django.contrib import admin
 
@@ -24,3 +24,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(CustomUser, UserAdmin)
+
+admin.site.register(MedicalProductCategory)
+admin.site.register(MedicalProduct)
+admin.site.register(Cart)

@@ -1,6 +1,6 @@
 from django import forms
 
-from users.models import CustomUser, Category
+from users.models import CustomUser, MedicalProductCategory, MedicalProduct
 
 
 class SignInForm(forms.Form):
@@ -16,5 +16,19 @@ class ShopEditForm(forms.ModelForm):
 
 class CategoryForm(forms.ModelForm):
     class Meta:
-        model = Category
+        model = MedicalProductCategory
         fields = ['name', 'description']
+
+
+class MedicalProductForm(forms.ModelForm):
+    class Meta:
+        model = MedicalProduct
+        fields = '__all__'
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-control select2'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['shop'].queryset = CustomUser.objects.filter(role='shop')
+        self.fields['image'].widget.attrs.update({'class': 'form-control-file', 'accept': 'image/*'})

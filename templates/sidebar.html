@@ -6,6 +6,8 @@
     <a href="{% url 'admin_users' %}" {% if request.path == '/admin_users/' %}class="active"{% endif %}>Admin Users</a>
     <a href="{% url 'category_list' %}"
        {% if request.path == '/category_list/' %}class="active"{% endif %}>Categories</a>
+    <a href="{% url 'products_list' %}"
+       {% if request.path == '/products_list/' %}class="active"{% endif %}>Products</a>
     <a href="#">Orders</a>
     <a href="#">Items</a>
     <a href="#">Help</a>

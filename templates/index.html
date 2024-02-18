@@ -10,36 +10,94 @@
             <p>Good Health Starts Here</p>
         </div>
     </div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Free Delivery</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum voluptates excepturi neque labore.</p>
-          <a href="#" class="btn btn-primary">Learn more</a>
+    {% include 'alerts.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Free Delivery</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum
+                            voluptates excepturi neque labore.</p>
+                        <a href="#" class="btn btn-primary">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">New Medicine Everyday</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum
+                            voluptates excepturi neque labore.</p>
+                        <a href="#" class="btn btn-primary">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Medicines Guaranteed</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum
+                            voluptates excepturi neque labore.</p>
+                        <a href="#" class="btn btn-primary">Learn more</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">New Medicine Everyday</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum voluptates excepturi neque labore.</p>
-          <a href="#" class="btn btn-primary">Learn more</a>
+
+        <br>
+
+        <div class="content">
+            <h2>Products</h2>
+            <hr>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Medicines Guaranteed</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laborum voluptates excepturi neque labore.</p>
-          <a href="#" class="btn btn-primary">Learn more</a>
+        <div class="row">
+
+            {% for product in products %}
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+                                 height="150" width="150">
+                        {% else %}
+                            <img src="https://medlineplus.gov/images/Medicines_share.jpg" class="card-img-top"
+                                 alt="Default Image" height="150" width="150">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                            <p class="card-text"><strong>Price:</strong> {{ product.price }}</p>
+                            <p class="card-text"><strong>Stock:</strong> {{ product.stock_quantity }}</p>
+                            <p class="card-text"><strong>Category:</strong> {{ product.category.name }}</p>
+                            <p class="card-text"><strong>Shop:</strong> {{ product.shop.name }}</p>
+                            <form action="{% url 'add_to_cart' product.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="quantity">Quantity:</label>
+                                    <select class="form-control" id="quantity" name="quantity">
+                                        {% for i in "123456789" %}
+                                            {% if i|add:"0" <= product.stock_quantity %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% else %}
+                                                <option value="{{ i }}">{{ i }} (Out of stock)</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% if product.stock_quantity == 0 %}
+                                    <button type="submit" class="btn btn-primary" disabled>Out of Stock</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-      </div>
+
     </div>
-  </div>
-</div>
+    </div>
 
 {% endblock %}

@@ -11,3 +11,7 @@ make run-local
 
 generate some users ( all roles):
 python manage.py generate_users
+
+
+create catgories:
+python manage.py generate_categories
