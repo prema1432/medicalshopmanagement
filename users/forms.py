@@ -32,3 +32,20 @@ class MedicalProductForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['shop'].queryset = CustomUser.objects.filter(role='shop')
         self.fields['image'].widget.attrs.update({'class': 'form-control-file', 'accept': 'image/*'})
+
+
+class CustomerForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'password', 'phone_number', 'image']
+
+
+class ShopUserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'password', 'phone_number', 'image', 'address', 'city', 'state',
+                  'country']

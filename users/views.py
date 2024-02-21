@@ -5,7 +5,7 @@ from django.db.models import Count, Sum, F
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
-from users.forms import SignInForm, ShopEditForm, CategoryForm, MedicalProductForm
+from users.forms import SignInForm, ShopEditForm, CategoryForm, MedicalProductForm, CustomerForm, ShopUserForm
 from users.models import CustomUser, MedicalProductCategory, MedicalProduct, Cart
 
 
@@ -53,10 +53,13 @@ def signin(request):
         if user is not None:
             login(request, user)
             if user.role in ["admin"]:
+                messages.success(request, "Login successful.")
                 return redirect('dashboard')
             else:
+                messages.success(request, "Login successful.")
                 return redirect('index')
         else:
+            messages.warning(request, "Invalid username or password")
             form.add_error(None, 'Invalid username or password')
     context["form"] = form
     return render(request, 'signin.html', context)
@@ -76,18 +79,53 @@ def products(request):
 def customer_signup(request):
     context = {}
     context["cart_items_count"] = 0
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save(commit=False)
+            role = "CUSTOMER"
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            my_username = f"{role[:2].upper()}000{user.id}"
+            user.username = my_username
+            user.save()
+            messages.success(request, f'{user.username} - User created successfully.')
+            return redirect('signin')
+    else:
+        form = CustomerForm()
+
     if request.user.is_authenticated:
         cart_items_count = Cart.objects.filter(user=request.user).count()
         context['cart_items_count'] = cart_items_count
+
+    context['form'] = form
     return render(request, 'customer_sign_up.html', context)
 
 
 def shop_signup(request):
     context = {}
     context["cart_items_count"] = 0
+    if request.method == 'POST':
+        form = ShopUserForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save(commit=False)
+            role = "SHOP"
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            my_username = f"{role[:2].upper()}000{user.id}"
+            user.username = my_username
+            user.save()
+            messages.success(request, f'{user.username} - User created successfully.')
+            return redirect('signin')
+    else:
+        form = ShopUserForm()
     if request.user.is_authenticated:
         cart_items_count = Cart.objects.filter(user=request.user).count()
         context['cart_items_count'] = cart_items_count
+
+    context['form'] = form
     return render(request, 'shop_signup.html', context)
 
 

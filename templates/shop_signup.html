@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block title %}About Us{% endblock %}
 
@@ -6,4 +7,64 @@
     <div class="page_header">
         <p>Shop Sign Up</p>
     </div>
+    {% include 'alerts.html' %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ form.username.label }}</div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {#                            {{ form|crispy }}#}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.first_name|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.last_name|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.email|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.password|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.phone_number|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.city|as_crispy_field }}
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.state|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.country|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.address|as_crispy_field }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.image|as_crispy_field }}
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
 {% endblock %}
